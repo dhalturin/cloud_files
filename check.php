@@ -2,8 +2,8 @@
 <?php
 error_reporting(0);
 
-$api_login      = "storage_5591_16";
-$api_key        = "4f6a19c0df32cb5ffb92d297e3592edd";
+$api_login      = "айдишник_клодовки";
+$api_key        = "ключ_от_клодовки";
 
 include_once ("./php-cloudfiles/cloudfiles.php");
 
