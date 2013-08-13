@@ -2,13 +2,8 @@
 <?php
 error_reporting(0);
 
-<<<<<<< HEAD
 $api_login      = "api_user";
 $api_key        = "api_key";
-=======
-$api_login      = "айдишник_клодовки";
-$api_key        = "ключ_от_клодовки";
->>>>>>> 9daaf14bebadd943defe4fca7341b8e35702c313
 
 include_once ("./php-cloudfiles/cloudfiles.php");
 
