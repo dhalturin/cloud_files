@@ -2,8 +2,8 @@
 <?php
 error_reporting(0);
 
-$api_login      = "api_user";
-$api_key        = "api_key";
+$api_login      = $argv[1] ? $argv[1] : "api_user";
+$api_key        = $argv[2] ? $argv[2] : "api_key";
 
 include_once ("./php-cloudfiles/cloudfiles.php");
 
@@ -29,7 +29,7 @@ foreach($a as $n)
             foreach($e as $l)
 	    {
                 print "\n" . $l->name . "\t";
-                $u = 'http://' . str_replace('_', '-', $api_login) . '.cs.clodoserver.ru/' . $n->name . '/' . $l->name;
+                $u = $l->container->cfs_auth->storage_url . '/' . $n->name . '/' . $l->name;
                 $c = curl_init();
                 $r = curl_setopt($c, CURLOPT_URL,            $u);
                 $r = curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
