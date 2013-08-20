@@ -20,16 +20,17 @@ foreach($a as $n)
 
     print "\nentering in container {$n->name}\t";
     #if(($e = $conn->get_container('public')))
-    if(($e = $conn->get_container($n->name)))
+    if(($g = $conn->get_container($n->name)))
     {
         print "ok\nget objects\t";
-	if(($e = $e->get_objects()))
+	if(($e = $g->get_objects()))
         {
-
+            $c = count($e);
+            $i = 1;
             foreach($e as $l)
 	    {
-                print "\n" . $l->name . "\t";
-                $u = $l->container->cfs_auth->storage_url . '/' . $n->name . '/' . $l->name;
+                print "\n" . $i . ' of ' . $c . ' ..  ' . $l->name . "\t";
+                /*$u = $l->container->cfs_auth->storage_url . '/' . $n->name . '/' . $l->name;
                 $c = curl_init();
                 $r = curl_setopt($c, CURLOPT_URL,            $u);
                 $r = curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -46,7 +47,12 @@ foreach($a as $n)
                 else
 		{
                     print "ok";
-                }
+		}*/
+		$o = $g->get_object($l->name);
+                #print_r($l->name);
+		$o->save_to_filename('/tmp/' . md5($l->name) . '_downloaded') or print 'error';
+                unlink('/tmp/' . md5($l->name) . '_downloaded');
+                $i++;
 	    }
 	}
         else print "fail";
