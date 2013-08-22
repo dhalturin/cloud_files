@@ -11,8 +11,15 @@ $auth = new CF_Authentication($api_login, $api_key);
 $auth->authenticate();
 $conn = new CF_Connection($auth);
 
-print "connection to storage\t";
-if(($a = $conn->get_containers())) print "ok"; else print "fail";
+if($argv[3]){
+    print 'use container: ' . $argv[3];
+    $a = array((object) array('name' => $argv[3]));
+}
+else
+{
+    print "get containers\t";
+    if(($a = $conn->get_containers())) print "ok"; else print "fail";
+}
 
 foreach($a as $n)
 {
@@ -50,7 +57,8 @@ foreach($a as $n)
 		}*/
 		$o = $g->get_object($l->name);
                 #print_r($l->name);
-		$o->save_to_filename('/tmp/' . md5($l->name) . '_downloaded') or print 'error';
+		print $o->save_to_filename('/tmp/' . md5($l->name) . '_downloaded') ? 'ok' : 'fail';
+		#$o->save_to_filename('/tmp/' . md5($l->name) . '_downloaded') or print 'error';
                 unlink('/tmp/' . md5($l->name) . '_downloaded');
                 $i++;
 	    }
