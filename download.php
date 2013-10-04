@@ -47,7 +47,16 @@ foreach($a as $n)
                     mkdir($argv[4] . '/' . $n->name . '/' . $l->name, 0755, true);
                 }
 		else
+                {
+                    if(file_exists($argv[4] . '/' . $n->name . '/' . $l->name))
+                    {
+                        print 'exists';
+                    }
+                    else
+                    {
                 	print $o->save_to_filename($argv[4] . '/' . $n->name . '/' . $l->name) ? 'ok' : 'fail';
+                    }
+                }
                 $i++;
 	    }
 	}
