@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-error_reporting(0);
+#error_reporting(0);
 
 $api_login      = $argv[1] ? $argv[1] : "api_user";
 $api_key        = $argv[2] ? $argv[2] : "api_key";
@@ -24,6 +24,7 @@ else
 foreach($a as $n)
 {
     print "\nentering in container {$n->name}\t";
+    mkdir($argv[4] . '/' . $n->name);
     if(($g = $conn->get_container($n->name)))
     {
         print "ok\nget objects\t";
@@ -36,12 +37,17 @@ foreach($a as $n)
                 print "\n" . $i . ' of ' . $c . ' ..  ' . $l->name . "\t";
 		$o = $g->get_object($l->name);
 
-		$d = explode('/', $l->name); array_pop($d);
-                if($d)
+
+		/*$d = explode('/', $l->name); 
+		print_r($d);
+		array_pop($d);*/
+                if($o->content_type == "application/directory")
                 {
-                    mkdir($argv[4] . '/' . implode('/', $d), 0755, true);
+                    print 'mkdir';
+                    mkdir($argv[4] . '/' . $n->name . '/' . $l->name, 0755, true);
                 }
-                print $o->save_to_filename($argv[4] . '/' . $l->name) ? 'ok' : 'fail';
+		else
+                	print $o->save_to_filename($argv[4] . '/' . $n->name . '/' . $l->name) ? 'ok' : 'fail';
                 $i++;
 	    }
 	}
